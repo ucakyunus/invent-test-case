@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { getMovieDetail } from "@/actions/movies";
 import { Detail } from "@/components/details/detail";
 
-type Props = {
-  params: { imdbId: string };
-};
+interface MovieDetailProps {
+  params: Promise<{ imdbId: string }>;
+}
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // eslint-disable-next-line @typescript-eslint/await-thenable
+export async function generateMetadata({
+  params,
+}: MovieDetailProps): Promise<Metadata> {
   const { imdbId } = await params;
 
   const movie = await getMovieDetail(imdbId);
@@ -18,8 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function FilmsDetailPage({ params }: Props) {
-  // eslint-disable-next-line @typescript-eslint/await-thenable
+export default async function FilmsDetailPage({ params }: MovieDetailProps) {
   const { imdbId } = await params;
 
   return <Detail imdbId={imdbId} />;

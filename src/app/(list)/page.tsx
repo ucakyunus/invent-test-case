@@ -2,16 +2,15 @@ import { getMovies } from "@/actions/movies";
 import { MovieList } from "@/components/movies/list";
 
 interface MoviesPageProps {
-  searchParams: {
+  searchParams: Promise<{
     s?: string;
     page?: string;
     y?: string;
     type?: "movie" | "series" | "episode";
-  };
+  }>;
 }
 
 export default async function MoviesPage({ searchParams }: MoviesPageProps) {
-  // eslint-disable-next-line @typescript-eslint/await-thenable
   const params = await searchParams;
 
   const searchQuery = params?.s ?? "Pokemon";
